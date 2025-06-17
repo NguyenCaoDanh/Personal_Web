@@ -4,8 +4,15 @@ import { FaBullseye, FaHistory, FaRocket } from 'react-icons/fa';
 
 export default function About() {
   return (
-    <section id="about" className="py-20 bg-white text-gray-800 font-orbitron">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <section
+      id="about"
+      className="py-20 bg-gradient-to-br from-[#e0f7fa] via-[#f0f4f8] to-[#fdf2f8] text-gray-800 font-orbitron relative overflow-hidden"
+    >
+      {/* Glowing Background Element */}
+      <div className="absolute -top-20 -left-20 w-96 h-96 bg-cyan-400 opacity-30 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto px-6 max-w-7xl relative z-10">
         {/* Title */}
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
@@ -23,7 +30,7 @@ export default function About() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="group p-6 border rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 hover:border-cyan-500 transition-all duration-500 cursor-default bg-gradient-to-br from-white to-blue-50"
+            className="group p-6 border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 hover:border-cyan-500 transition-all duration-500 cursor-default bg-white/80 backdrop-blur-lg"
           >
             <div className="flex justify-center mb-4 text-indigo-600 text-4xl">
               <FaBullseye />
@@ -39,7 +46,7 @@ export default function About() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="group p-6 border rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 hover:border-cyan-500 transition-all duration-500 cursor-default bg-gradient-to-br from-white to-blue-50"
+            className="group p-6 border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 hover:border-cyan-500 transition-all duration-500 cursor-default bg-white/80 backdrop-blur-lg"
           >
             <div className="flex justify-center mb-4 text-blue-600 text-4xl">
               <FaHistory />
@@ -55,7 +62,7 @@ export default function About() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="group p-6 border rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 hover:border-cyan-500 transition-all duration-500 cursor-default bg-gradient-to-br from-white to-blue-50"
+            className="group p-6 border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 hover:border-cyan-500 transition-all duration-500 cursor-default bg-white/80 backdrop-blur-lg"
           >
             <div className="flex justify-center mb-4 text-teal-600 text-4xl">
               <FaRocket />
