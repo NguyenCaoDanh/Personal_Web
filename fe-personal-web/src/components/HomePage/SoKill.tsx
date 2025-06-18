@@ -15,6 +15,7 @@ import {
   FaArrowLeft,
   FaArrowRight,
 } from 'react-icons/fa';
+import { SiAmazon } from 'react-icons/si';
 
 import {
   SiSpringboot,
@@ -28,6 +29,16 @@ import {
   SiAngular,
   SiIonic,
   SiMicrodotblog,
+  SiMongodb,
+  SiRedis,
+  SiGooglecloud,
+  SiJenkins,
+  SiGraphql,
+  SiPython,
+  SiNodedotjs,
+  SiGo,
+  SiRabbitmq,
+  SiApachekafka,
 } from 'react-icons/si';
 
 export default function Skills() {
@@ -37,11 +48,39 @@ export default function Skills() {
       color: 'from-blue-500 to-blue-300',
       skills: [
         { name: 'Java', icon: <FaJava size={30} color="#F89820" /> },
-        { name: 'Spring Boot', icon: <SiSpringboot size={30} color="#6DB33F" /> },
-        { name: 'Microservices', icon: <SiMicrodotblog size={30} color="#6DB33F" /> },
+        {
+          name: 'Spring Boot',
+          icon: <SiSpringboot size={30} color="#6DB33F" />,
+        },
+        { name: 'Node.js', icon: <SiNodedotjs size={30} color="#68A063" /> },
+        { name: 'Python', icon: <SiPython size={30} color="#3776AB" /> },
+        { name: 'Go', icon: <SiGo size={30} color="#00ADD8" /> },
         { name: 'MySQL', icon: <SiMysql size={30} color="#4479A1" /> },
+        { name: 'MongoDB', icon: <SiMongodb size={30} color="#47A248" /> },
+        { name: 'Redis', icon: <SiRedis size={30} color="#DC382D" /> },
         { name: 'Postman', icon: <SiPostman size={30} color="#FF6C37" /> },
         { name: 'Docker', icon: <SiDocker size={30} color="#0db7ed" /> },
+      ],
+    },
+    {
+      title: 'Microservices',
+      color: 'from-orange-500 to-orange-300',
+      skills: [
+        {
+          name: 'Microservices',
+          icon: <SiMicrodotblog size={30} color="#6DB33F" />,
+        },
+        { name: 'Eureka', icon: <SiMicrodotblog size={30} color="#6DB33F" /> },
+        {
+          name: 'API Gateway',
+          icon: <SiMicrodotblog size={30} color="#6DB33F" />,
+        },
+        {
+          name: 'OpenFeign',
+          icon: <SiMicrodotblog size={30} color="#6DB33F" />,
+        },
+        { name: 'RabbitMQ', icon: <SiRabbitmq size={30} color="#FF6600" /> },
+        { name: 'Kafka', icon: <SiApachekafka size={30} color="#231F20" /> },
       ],
     },
     {
@@ -52,11 +91,39 @@ export default function Skills() {
         { name: 'React Native', icon: <FaReact size={30} color="#61DAFB" /> },
         { name: 'Angular', icon: <SiAngular size={30} color="#DD0031" /> },
         { name: 'Ionic', icon: <SiIonic size={30} color="#3880FF" /> },
-        { name: 'JavaScript', icon: <SiJavascript size={30} color="#F7DF1E" /> },
+        {
+          name: 'JavaScript',
+          icon: <SiJavascript size={30} color="#F7DF1E" />,
+        },
         { name: 'HTML', icon: <FaHtml5 size={30} color="#E34F26" /> },
         { name: 'CSS', icon: <FaCss3Alt size={30} color="#1572B6" /> },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss size={30} color="#06B6D4" /> },
+        {
+          name: 'Tailwind CSS',
+          icon: <SiTailwindcss size={30} color="#06B6D4" />,
+        },
         { name: 'Android Java', icon: <FaAndroid size={30} color="#3DDC84" /> },
+      ],
+    },
+    {
+      title: 'API & Cloud',
+      color: 'from-yellow-500 to-yellow-300',
+      skills: [
+        {
+          name: 'RESTful API',
+          icon: <FaProjectDiagram size={30} color="#10B981" />,
+        },
+        { name: 'GraphQL', icon: <SiGraphql size={30} color="#E535AB" /> },
+       { name: 'AWS', icon: <SiAmazon size={30} color="#FF9900" /> },
+
+        {
+          name: 'Google Cloud',
+          icon: <SiGooglecloud size={30} color="#4285F4" />,
+        },
+        { name: 'Jenkins', icon: <SiJenkins size={30} color="#D24939" /> },
+        {
+          name: 'GitHub Actions',
+          icon: <FaGitAlt size={30} color="#24292E" />,
+        },
       ],
     },
     {
@@ -83,8 +150,14 @@ export default function Skills() {
       title: 'Business Analysts',
       color: 'from-green-500 to-green-300',
       skills: [
-        { name: 'System Analysis', icon: <FaProjectDiagram size={30} color="#10B981" /> },
-        { name: 'System Design', icon: <FaProjectDiagram size={30} color="#10B981" /> },
+        {
+          name: 'System Analysis',
+          icon: <FaProjectDiagram size={30} color="#10B981" />,
+        },
+        {
+          name: 'System Design',
+          icon: <FaProjectDiagram size={30} color="#10B981" />,
+        },
       ],
     },
   ];
@@ -98,8 +171,12 @@ export default function Skills() {
     trackMouse: true,
   });
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % skillCategories.length);
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+  const nextSlide = () =>
+    setCurrentIndex((prev) => (prev + 1) % skillCategories.length);
+  const prevSlide = () =>
+    setCurrentIndex(
+      (prev) => (prev - 1 + skillCategories.length) % skillCategories.length
+    );
 
   return (
     <section id="skills" className="py-20 font-orbitron">
@@ -117,10 +194,7 @@ export default function Skills() {
               viewport={{ once: true }}
               className="p-6 rounded-2xl bg-white/10 backdrop-blur-lg border border-gray-300/20 text-white shadow-lg hover:shadow-cyan-400/50 hover:scale-105 transition-all duration-500 cursor-default relative overflow-hidden"
             >
-              {/* Glow Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-cyan-400 pointer-events-none transition-opacity duration-500"
-              ></motion.div>
+              <motion.div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-cyan-400 pointer-events-none transition-opacity duration-500"></motion.div>
 
               <h3 className="text-2xl font-semibold mb-6">{category.title}</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
@@ -146,10 +220,16 @@ export default function Skills() {
         {/* Mobile Slider */}
         <div {...handlers} className="md:hidden relative overflow-hidden">
           <div className="flex justify-between items-center mb-4">
-            <button onClick={prevSlide} className="p-2 bg-white/20 backdrop-blur-lg rounded-full hover:bg-cyan-400 transition-all">
+            <button
+              onClick={prevSlide}
+              className="p-2 bg-white/20 backdrop-blur-lg rounded-full hover:bg-cyan-400 transition-all"
+            >
               <FaArrowLeft />
             </button>
-            <button onClick={nextSlide} className="p-2 bg-white/20 backdrop-blur-lg rounded-full hover:bg-cyan-400 transition-all">
+            <button
+              onClick={nextSlide}
+              className="p-2 bg-white/20 backdrop-blur-lg rounded-full hover:bg-cyan-400 transition-all"
+            >
               <FaArrowRight />
             </button>
           </div>
@@ -163,12 +243,11 @@ export default function Skills() {
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               className="p-6 rounded-2xl bg-white/10 backdrop-blur-lg border border-gray-300/20 text-white shadow-lg min-h-[400px] flex flex-col justify-center items-center relative overflow-hidden"
             >
-              {/* Glow Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-cyan-400 pointer-events-none transition-opacity duration-500"
-              ></motion.div>
+              <motion.div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-cyan-400 pointer-events-none transition-opacity duration-500"></motion.div>
 
-              <h3 className="text-2xl font-semibold mb-6">{skillCategories[currentIndex].title}</h3>
+              <h3 className="text-2xl font-semibold mb-6">
+                {skillCategories[currentIndex].title}
+              </h3>
               <div className="grid grid-cols-2 gap-6">
                 {skillCategories[currentIndex].skills.map((skill) => (
                   <motion.div
@@ -190,7 +269,11 @@ export default function Skills() {
               <motion.button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full ${index === currentIndex ? 'bg-cyan-400 scale-125' : 'bg-gray-400'}`}
+                className={`w-3 h-3 rounded-full ${
+                  index === currentIndex
+                    ? 'bg-cyan-400 scale-125'
+                    : 'bg-gray-400'
+                }`}
                 whileTap={{ scale: 0.9 }}
                 animate={{ scale: index === currentIndex ? 1.25 : 1 }}
                 transition={{ type: 'spring', stiffness: 300 }}

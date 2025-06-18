@@ -217,3 +217,87 @@ body {
     opacity: 0.3;
   }
 }
+.twinkle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 4s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+.cloud {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 200px;
+  height: 100px;
+  filter: blur(20px);
+  animation: cloudMove 60s linear infinite;
+  z-index: -2;
+}
+
+@keyframes cloudMove {
+  0% {
+    transform: translateX(-250px);
+  }
+  100% {
+    transform: translateX(110vw);
+  }
+}
+.aurora {
+  position: fixed;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background: radial-gradient(circle at 30% 30%, rgba(0,255,255,0.1), transparent),
+              radial-gradient(circle at 70% 70%, rgba(255,0,255,0.1), transparent);
+  animation: auroraMove 20s infinite linear;
+  z-index: -3;
+}
+
+@keyframes auroraMove {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+.fog {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 20%, transparent 80%);
+  animation: fogMove 120s linear infinite;
+  z-index: -2;
+}
+
+@keyframes fogMove {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(50px) translateY(50px);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
