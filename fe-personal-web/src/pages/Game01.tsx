@@ -1,36 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import useSound from 'use-sound';
+
 
 interface Position {
   x: number;
   y: number;
 }
 
-const boardSize = 20;
+const boardSize = 400;
+const segmentSize = 20;
 
-const generateFood = (snakePositions: Position[]): Position => {
-  let newFood;
-  do {
-    newFood = {
-      x: Math.floor(Math.random() * boardSize),
-      y: Math.floor(Math.random() * boardSize),
-    };
-  } while (snakePositions.some(pos => pos.x === newFood.x && pos.y === newFood.y));
-
-  return newFood;
-};
-
-export default function Game01() {
-  const initialSnake: Position[] = [{ x: 8, y: 8 }];
-
-  const [snake, setSnake] = useState(initialSnake);
-  const [food, setFood] = useState(generateFood(initialSnake));
-  const [direction, setDirection] = useState<'UP' | 'DOWN' | 'LEFT' | 'RIGHT'>('RIGHT');
+export default function SmoothSnakeGame() {
+  const [snake, setSnake] = useState<Position[]>([
+    { x: 200, y: 200 },
+    { x: 180, y: 200 },
+    { x: 160, y: 200 },
+  ]);
+  const [direction, setDirection] = useState<'UP' | 'DOWN' | 'LEFT' | 'RIGHT'>(
+    'RIGHT'
+  );
+  const [food, setFood] = useState(generateFood());
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
-  const [speed, setSpeed] = useState(200);
+  const [isPaused, setIsPaused] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+
+  const requestRef = useRef<number | null>(null);
+  const speed = 2;
+
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -47,22 +54,35 @@ export default function Game01() {
         case 'ArrowRight':
           if (direction !== 'LEFT') setDirection('RIGHT');
           break;
+        case ' ':
+          setIsPaused(!isPaused);
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [direction]);
+  }, [direction, isPaused]);
 
   useEffect(() => {
-    if (gameOver) return;
+    if (gameOver || isPaused || countdown > 0) return;
 
-    const interval = setInterval(() => {
+    const animate = () => {
       moveSnake();
-    }, speed);
+      requestRef.current = requestAnimationFrame(animate);
+    };
 
-    return () => clearInterval(interval);
-  }, [snake, direction, gameOver, speed]);
+    if (requestRef.current === null) {
+      requestRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current);
+        requestRef.current = null;
+      }
+    };
+  }, [snake, direction, gameOver, isPaused, countdown]);
 
   const moveSnake = () => {
     const newSnake = [...snake];
@@ -70,95 +90,181 @@ export default function Game01() {
 
     switch (direction) {
       case 'UP':
-        head.y -= 1;
+        head.y -= speed;
         break;
       case 'DOWN':
-        head.y += 1;
+        head.y += speed;
         break;
       case 'LEFT':
-        head.x -= 1;
+        head.x -= speed;
         break;
       case 'RIGHT':
-        head.x += 1;
+        head.x += speed;
         break;
     }
 
-    if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize || isSnake(head)) {
+    for (let i = newSnake.length - 1; i > 0; i--) {
+      newSnake[i] = { ...newSnake[i - 1] };
+    }
+
+    newSnake[0] = head;
+
+    if (isCollision(head)) {
       setGameOver(true);
       return;
     }
 
-    newSnake.unshift(head);
-
-    if (head.x === food.x && head.y === food.y) {
-      setFood(generateFood(newSnake));
+    if (
+      Math.abs(head.x - food.x) < segmentSize &&
+      Math.abs(head.y - food.y) < segmentSize
+    ) {
+  
+      newSnake.push({ ...newSnake[newSnake.length - 1] });
+      setFood(generateFood());
       setScore(score + 10);
-      if (speed > 50) setSpeed(speed - 10);
-    } else {
-      newSnake.pop();
     }
 
     setSnake(newSnake);
   };
 
-  const isSnake = (position: Position) => {
-    return snake.some(segment => segment.x === position.x && segment.y === position.y);
+  const isCollision = (head: Position) => {
+    if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize)
+      return true;
+    return false;
   };
 
   const restartGame = () => {
-    setSnake(initialSnake);
-    setFood(generateFood(initialSnake));
+    setSnake([
+      { x: 200, y: 200 },
+      { x: 180, y: 200 },
+      { x: 160, y: 200 },
+    ]);
     setDirection('RIGHT');
+    setFood(generateFood());
     setGameOver(false);
     setScore(0);
-    setSpeed(200);
+    setIsPaused(false);
+    setCountdown(3);
+    if (requestRef.current !== null) {
+      cancelAnimationFrame(requestRef.current);
+      requestRef.current = null;
+    }
   };
 
+  if (countdown > 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-200 to-blue-400 p-6">
+        <h1 className="text-9xl font-extrabold animate-pulse text-green-800">
+          {countdown}
+        </h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-200 to-blue-400 p-4">
-      <h1 className="text-5xl font-bold mb-4 text-green-800 animate-pulse">🐍 Snake Game</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-200 to-blue-400 p-6">
+      <h1 className="text-5xl font-extrabold mb-4 text-green-900 animate-pulse drop-shadow-lg">
+        🐍 Smooth Snake
+      </h1>
 
-      <div className="mb-4 text-lg text-green-900 font-medium">Score: {score}</div>
-
-      {gameOver && (
-        <motion.div 
-          initial={{ scale: 0 }} 
-          animate={{ scale: 1 }} 
-          className="mb-4 text-3xl text-red-600 font-bold animate-bounce"
-        >Game Over!</motion.div>
-      )}
+      <div className="mb-4 text-xl text-green-800 font-semibold">
+        Score: {score}
+      </div>
 
       <div
-        className="grid bg-white border-8 border-green-700 rounded-lg shadow-lg"
+        className="relative shadow-xl"
         style={{
-          gridTemplateRows: `repeat(${boardSize}, 20px)`,
-          gridTemplateColumns: `repeat(${boardSize}, 20px)`,
+          width: boardSize,
+          height: boardSize,
+          backgroundImage: `linear-gradient(to right, #d1fae5 1px, transparent 1px),
+                            linear-gradient(to bottom, #d1fae5 1px, transparent 1px)`,
+          backgroundSize: `${segmentSize}px ${segmentSize}px`,
+          borderRadius: '1.5rem',
+          border: '5px solid #065f46',
+          overflow: 'hidden',
         }}
       >
-        {Array.from({ length: boardSize * boardSize }).map((_, idx) => {
-          const x = idx % boardSize;
-          const y = Math.floor(idx / boardSize);
-          const isSnakeCell = snake.some(segment => segment.x === x && segment.y === y);
-          const isFoodCell = food.x === x && food.y === y;
+        {snake.map((segment, idx) => (
+          <motion.div
+            key={idx}
+            className="absolute bg-green-600"
+            style={{
+              width: segmentSize - 2,
+              height: segmentSize - 2,
+              top: segment.y + 1,
+              left: segment.x + 1,
+              borderRadius: idx === 0 ? '50%' : '25%',
+              zIndex: snake.length - idx,
+            }}
+            animate={{ top: segment.y + 1, left: segment.x + 1 }}
+            transition={{ ease: 'linear', duration: 0.1 }}
+          />
+        ))}
 
-          return (
-            <motion.div
-              key={idx}
-              className={`w-5 h-5 border ${isSnakeCell ? 'bg-green-700' : isFoodCell ? 'bg-red-500' : ''}`}
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.2 }}
-            ></motion.div>
-          );
-        })}
+        <motion.div
+          className="absolute bg-red-500"
+          style={{
+            width: segmentSize - 2,
+            height: segmentSize - 2,
+            top: food.y + 1,
+            left: food.x + 1,
+            borderRadius: '50%',
+          }}
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 0.6, repeat: Infinity }}
+        />
       </div>
 
       <div className="flex space-x-4 mt-6">
-        <Button onClick={restartGame}>Restart</Button>
+        <Button
+          onClick={restartGame}
+          className="px-6 py-2 rounded-full bg-green-700 text-white hover:bg-green-800 transition"
+        >
+          Restart
+        </Button>
+        <Button
+          onClick={() => setIsPaused(!isPaused)}
+          className="px-6 py-2 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition"
+        >
+          {isPaused ? 'Resume' : 'Pause'}
+        </Button>
         <Link to="/">
-          <Button variant="secondary">Home</Button>
+          <Button variant="secondary" className="px-6 py-2 rounded-full">
+            Home
+          </Button>
         </Link>
       </div>
+
+      {gameOver && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl text-center space-y-4 animate-bounce">
+            <h2 className="text-5xl font-extrabold text-red-600 mb-4 drop-shadow">
+              💀 Game Over!
+            </h2>
+            <p className="text-lg font-medium">Your Score: {score}</p>
+            <div className="flex space-x-4 justify-center">
+              <Button
+                onClick={restartGame}
+                className="px-6 py-2 rounded-full bg-green-700 text-white hover:bg-green-800 transition"
+              >
+                Restart
+              </Button>
+              <Link to="/list-games">
+                <Button variant="secondary" className="px-6 py-2 rounded-full">
+                Come Back
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+}
+
+function generateFood(): Position {
+  return {
+    x: Math.floor(Math.random() * (boardSize / segmentSize)) * segmentSize,
+    y: Math.floor(Math.random() * (boardSize / segmentSize)) * segmentSize,
+  };
 }

@@ -3,69 +3,71 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
+const games = [
+  {
+    title: 'Snake Game',
+    description: 'Classic snake game. Try to eat as much as you can!',
+    link: '/snake-game',
+  },
+  {
+    title: 'Caro Chess',
+    description: 'Caro games for 2 players.',
+    link: '/caro-games',
+  },
+  {
+    title: 'Coming Soon',
+    description: 'Stay tuned for more games!',
+    comingSoon: true,
+  },
+];
+
 export default function ListGames() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800">
       <Header />
 
       <main className="flex-1 container mx-auto px-4 py-20 font-orbitron">
         <motion.h1
-          className="text-4xl font-extrabold text-center mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+          className="text-5xl font-extrabold text-center mb-16 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          Game Collection
+          🎮 Game Collection 🎮
         </motion.h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Game Card 1 */}
-          <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Snake Game</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Classic snake game. Try to eat as much as you can!
-            </p>
-            <a
-              href="/snake-game"
-              className="text-cyan-500 hover:underline"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+          {games.map((game, index) => (
+            <motion.div
+              key={index}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-cyan-500/50 transition-shadow duration-300 cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              Play now →
-            </a>
-          </motion.div>
-
-          {/* Game Card 2 */}
-          <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Egg Catcher</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Catch the falling eggs and avoid missing them!
-            </p>
-            <a
-              href="/egg-catcher"
-              className="text-cyan-500 hover:underline"
-            >
-              Play now →
-            </a>
-          </motion.div>
-
-          {/* Game Card 3 - bạn có thể thêm nhiều game khác ở đây */}
-          <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Coming Soon</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Stay tuned for more games!
-            </p>
-            <span className="text-gray-400 cursor-default">
-              Coming soon...
-            </span>
-          </motion.div>
+              <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mb-4">
+                {game.title}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6 text-center text-lg">
+                {game.description}
+              </p>
+              {game.comingSoon ? (
+                <span className="block text-center text-gray-400 cursor-default">
+                  Coming soon...
+                </span>
+              ) : (
+                <div className="flex justify-center">
+                  <a
+                    href={game.link}
+                    className="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl hover:from-cyan-600 hover:to-blue-600 transition-colors text-lg font-semibold"
+                  >
+                    Play now →
+                  </a>
+                </div>
+              )}
+            </motion.div>
+          ))}
         </div>
       </main>
 
