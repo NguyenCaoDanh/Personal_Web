@@ -5,32 +5,13 @@ import {
   FaEnvelope,
   FaBars,
   FaTimes,
-  FaSun,
-  FaMoon,
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from './ThemeProvider';
+import ToggleThemeButton from './ToggleThemeButton';
 
 export default function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [showHeader, setShowHeader] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const { theme, toggleTheme } = useTheme();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 100) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-      setLastScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
 
   useEffect(() => {
     const handleActiveSection = () => {
@@ -56,22 +37,28 @@ export default function Header() {
 
   return (
     <>
-      <motion.nav
-        className={`fixed top-0 w-full ${
-          theme === 'dark' ? 'bg-gray-900' : 'bg-white'
-        } shadow-lg z-50 transition-transform duration-500 ${
-          showHeader ? 'translate-y-0' : '-translate-y-full'
-        }`}
-      >
+      <motion.nav className="fixed top-0 w-full bg-gray-900 shadow-lg z-50 transition-transform duration-500 sticky">
         <div className="container mx-auto px-8 py-4 flex justify-between items-center font-orbitron">
+          {/* Menu button in mobile view */}
+          <div className="md:hidden flex items-center space-x-4">
+            <div
+              className="text-gray-100 text-2xl cursor-pointer"
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <FaBars />
+            </div>
+          </div>
+
+          {/* Logo */}
           <motion.div
             className="font-extrabold text-3xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent cursor-pointer"
             whileHover={{ scale: 1.1 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            Nguyen Cao Danh
+            Portfolio
           </motion.div>
 
+          {/* Navigation Menu */}
           <ul className="hidden md:flex space-x-10 text-lg font-medium">
             {menuItems.map((item) => (
               <li key={item} className="group relative">
@@ -83,16 +70,16 @@ export default function Header() {
                       ? '/list-games'
                       : `#${item.toLowerCase()}`
                   }
-                  className={`$${
+                  className={`${
                     activeSection === item.toLowerCase()
                       ? 'text-cyan-400'
-                      : 'text-gray-700 dark:text-gray-300'
+                      : 'text-gray-100'
                   } hover:text-cyan-400 transition-all duration-300`}
                 >
                   {item}
                 </a>
                 <span
-                  className={`absolute left-0 -bottom-1 h-0.5 rounded-full transition-all duration-300 $${
+                  className={`absolute left-0 -bottom-1 h-0.5 rounded-full transition-all duration-300 ${
                     activeSection === item.toLowerCase()
                       ? 'w-full bg-cyan-400'
                       : 'w-0 group-hover:w-full bg-cyan-400'
@@ -102,8 +89,11 @@ export default function Header() {
             ))}
           </ul>
 
-          <div className="flex items-center space-x-6">
-            <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-300">
+          {/* Right group: ToggleThemeButton + Social icons */}
+          <div className="flex items-center space-x-4">
+            <ToggleThemeButton />
+
+            <div className="hidden md:flex space-x-6 text-gray-100">
               <a
                 href="https://github.com/your-github"
                 target="_blank"
@@ -127,16 +117,11 @@ export default function Header() {
                 <FaEnvelope size={20} />
               </a>
             </div>
-            <div
-              className="md:hidden text-gray-700 dark:text-gray-300 text-2xl cursor-pointer"
-              onClick={() => setIsSidebarOpen(true)}
-            >
-              <FaBars />
-            </div>
           </div>
         </div>
       </motion.nav>
 
+      {/* Sidebar Mobile */}
       <AnimatePresence>
         {isSidebarOpen && (
           <>
@@ -149,10 +134,10 @@ export default function Header() {
             ></motion.div>
 
             <motion.div
-              className="fixed top-0 right-0 w-64 h-full bg-gray-900 text-white shadow-lg z-50 p-6 flex flex-col font-orbitron"
-              initial={{ x: '100%' }}
+              className="fixed top-0 left-0 w-64 h-full bg-gray-900 text-white shadow-lg z-50 p-6 flex flex-col font-orbitron"
+              initial={{ x: '-100%' }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
+              exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
               <div
@@ -173,8 +158,10 @@ export default function Header() {
                           ? '/list-games'
                           : `#${item.toLowerCase()}`
                       }
-                      className={`block hover:text-cyan-400 transition-all duration-300 $${
-                        activeSection === item.toLowerCase() ? 'text-cyan-400' : ''
+                      className={`block hover:text-cyan-400 transition-all duration-300 ${
+                        activeSection === item.toLowerCase()
+                          ? 'text-cyan-400'
+                          : ''
                       }`}
                       onClick={() => setIsSidebarOpen(false)}
                     >
