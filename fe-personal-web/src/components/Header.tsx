@@ -37,10 +37,10 @@ export default function Header() {
 
   return (
     <>
-      <motion.nav className="fixed top-0 w-full bg-gray-900 shadow-lg z-50 transition-transform duration-500 sticky">
+      <motion.nav className="fixed top-0 w-full bg-gray-900 shadow-lg z-50 transition-transform duration-500">
         <div className="container mx-auto px-8 py-4 flex justify-between items-center font-orbitron">
-          {/* Menu button in mobile view */}
-          <div className="md:hidden flex items-center space-x-4">
+          {/* Menu button in mobile & iPad view */}
+          <div className="lg:hidden flex items-center space-x-4">
             <div
               className="text-gray-100 text-2xl cursor-pointer"
               onClick={() => setIsSidebarOpen(true)}
@@ -58,8 +58,8 @@ export default function Header() {
             Portfolio
           </motion.div>
 
-          {/* Navigation Menu */}
-          <ul className="hidden md:flex space-x-10 text-lg font-medium">
+          {/* Navigation Menu for desktop */}
+          <ul className="hidden lg:flex space-x-10 text-lg font-medium">
             {menuItems.map((item) => (
               <li key={item} className="group relative">
                 <a
@@ -92,8 +92,7 @@ export default function Header() {
           {/* Right group: ToggleThemeButton + Social icons */}
           <div className="flex items-center space-x-4">
             <ToggleThemeButton />
-
-            <div className="hidden md:flex space-x-6 text-gray-100">
+            <div className="hidden lg:flex space-x-6 text-gray-100">
               <a
                 href="https://github.com/your-github"
                 target="_blank"
@@ -121,7 +120,7 @@ export default function Header() {
         </div>
       </motion.nav>
 
-      {/* Sidebar Mobile */}
+      {/* Sidebar Mobile & iPad */}
       <AnimatePresence>
         {isSidebarOpen && (
           <>

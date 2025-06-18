@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import {
   FaReact,
   FaHtml5,
@@ -9,6 +13,7 @@ import {
   FaAndroid,
   FaProjectDiagram,
 } from 'react-icons/fa';
+
 import {
   SiSpringboot,
   SiMysql,
@@ -22,7 +27,8 @@ import {
   SiIonic,
   SiMicrodotblog,
 } from 'react-icons/si';
-import { motion } from 'framer-motion';
+
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 export default function Skills() {
   const skillCategories = [
@@ -31,14 +37,8 @@ export default function Skills() {
       color: 'from-blue-500 to-blue-300',
       skills: [
         { name: 'Java', icon: <FaJava size={30} color="#F89820" /> },
-        {
-          name: 'Spring Boot',
-          icon: <SiSpringboot size={30} color="#6DB33F" />,
-        },
-        {
-          name: 'Microservices',
-          icon: <SiMicrodotblog size={30} color="#6DB33F" />,
-        },
+        { name: 'Spring Boot', icon: <SiSpringboot size={30} color="#6DB33F" /> },
+        { name: 'Microservices', icon: <SiMicrodotblog size={30} color="#6DB33F" /> },
         { name: 'MySQL', icon: <SiMysql size={30} color="#4479A1" /> },
         { name: 'Postman', icon: <SiPostman size={30} color="#FF6C37" /> },
         { name: 'Docker', icon: <SiDocker size={30} color="#0db7ed" /> },
@@ -52,16 +52,10 @@ export default function Skills() {
         { name: 'React Native', icon: <FaReact size={30} color="#61DAFB" /> },
         { name: 'Angular', icon: <SiAngular size={30} color="#DD0031" /> },
         { name: 'Ionic', icon: <SiIonic size={30} color="#3880FF" /> },
-        {
-          name: 'JavaScript',
-          icon: <SiJavascript size={30} color="#F7DF1E" />,
-        },
+        { name: 'JavaScript', icon: <SiJavascript size={30} color="#F7DF1E" /> },
         { name: 'HTML', icon: <FaHtml5 size={30} color="#E34F26" /> },
         { name: 'CSS', icon: <FaCss3Alt size={30} color="#1572B6" /> },
-        {
-          name: 'Tailwind CSS',
-          icon: <SiTailwindcss size={30} color="#06B6D4" />,
-        },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss size={30} color="#06B6D4" /> },
         { name: 'Android Java', icon: <FaAndroid size={30} color="#3DDC84" /> },
       ],
     },
@@ -89,44 +83,49 @@ export default function Skills() {
       title: 'Business Analysts',
       color: 'from-green-500 to-green-300',
       skills: [
-        {
-          name: 'System Analysis',
-          icon: <FaProjectDiagram size={30} color="#10B981" />,
-        },
-        {
-          name: 'System Design',
-          icon: <FaProjectDiagram size={30} color="#10B981" />,
-        },
+        { name: 'System Analysis', icon: <FaProjectDiagram size={30} color="#10B981" /> },
+        { name: 'System Design', icon: <FaProjectDiagram size={30} color="#10B981" /> },
       ],
     },
   ];
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => nextSlide(),
+    onSwipedRight: () => prevSlide(),
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+  });
+
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % skillCategories.length);
+  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+
   return (
-    <section
-      id="skills"
-      className="py-20 font-orbitron"
-    >
+    <section id="skills" className="py-20 font-orbitron">
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-12">My Skills</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Desktop Grid */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-12">
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={category.title}
               initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: catIndex * 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
               className={`p-6 rounded-2xl bg-gradient-to-br ${category.color} text-white shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-500`}
             >
               <h3 className="text-2xl font-semibold mb-6">{category.title}</h3>
-
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                 {category.skills.map((skill, index) => (
                   <motion.div
                     key={skill.name}
                     initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.6 }}
+                    viewport={{ once: true }}
                     className="flex flex-col items-center bg-white text-gray-800 p-4 rounded-xl shadow hover:shadow-xl hover:scale-110 border-2 border-transparent hover:border-cyan-400 transition-all duration-500 cursor-default"
                   >
                     <div className="mb-2">{skill.icon}</div>
@@ -136,6 +135,56 @@ export default function Skills() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Mobile Slider */}
+        <div {...handlers} className="md:hidden relative overflow-hidden">
+          <div className="flex justify-between items-center mb-4">
+            <button onClick={prevSlide} className="p-2 bg-gray-200 rounded-full hover:bg-cyan-400 transition-all">
+              <FaArrowLeft />
+            </button>
+            <button onClick={nextSlide} className="p-2 bg-gray-200 rounded-full hover:bg-cyan-400 transition-all">
+              <FaArrowRight />
+            </button>
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={skillCategories[currentIndex].title}
+              initial={{ x: 300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className={`p-6 rounded-2xl bg-gradient-to-br ${skillCategories[currentIndex].color} text-white shadow-lg min-h-[400px] flex flex-col justify-center items-center`}
+            >
+              <h3 className="text-2xl font-semibold mb-6">{skillCategories[currentIndex].title}</h3>
+              <div className="grid grid-cols-2 gap-6">
+                {skillCategories[currentIndex].skills.map((skill) => (
+                  <div
+                    key={skill.name}
+                    className="flex flex-col items-center bg-white text-gray-800 p-4 rounded-xl shadow hover:shadow-xl hover:scale-110 border-2 border-transparent hover:border-cyan-400 transition-all duration-500 cursor-default"
+                  >
+                    <div className="mb-2">{skill.icon}</div>
+                    <p className="font-medium text-center">{skill.name}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Pagination Dots */}
+          <div className="flex justify-center mt-6 space-x-3">
+            {skillCategories.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-3 h-3 rounded-full ${index === currentIndex ? 'bg-cyan-400 scale-125' : 'bg-gray-400'}`}
+                whileTap={{ scale: 0.9 }}
+                animate={{ scale: index === currentIndex ? 1.25 : 1 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              ></motion.button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
