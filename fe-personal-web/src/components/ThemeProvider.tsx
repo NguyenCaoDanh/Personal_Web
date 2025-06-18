@@ -1,56 +1,52 @@
-import React, { createContext, useContext, ReactNode } from "react";
-import colors, {
-  darkColors,
-  accentColors,
-  uiColors,
-  textColors,
-} from "@/lib/colors";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 
-// Define the theme colors and constants
-const theme = {
-  colors,
-  gradients: {
-    blueToPurple: "linear-gradient(90deg, #00E8F8 0%, #7A47E0 100%)",
-  },
-  borderRadius: {
-    sm: "0.25rem",
-    md: "0.5rem",
-    lg: "0.75rem",
-  },
-  spacing: {
-    container: {
-      px: {
-        mobile: "1rem",
-        tablet: "2rem",
-        desktop: "4rem",
-      },
-      maxWidth: "1512px",
-    },
-  },
-  shadows: {
-    sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-    md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-    lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-  },
-};
+type Theme = 'light' | 'dark';
 
-// Create the theme context
-type ThemeContextType = typeof theme;
-const ThemeContext = createContext<ThemeContextType>(theme);
-
-// Theme provider props
-interface ThemeProviderProps {
-  children: ReactNode;
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
 }
 
-// Theme provider component
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    return (localStorage.getItem('theme') as Theme) || 'light';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
 
-// Custom hook to use the theme
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
 
 export default ThemeProvider;

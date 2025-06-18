@@ -33,15 +33,11 @@ export default function Hero() {
   return (
     <header
       id="home"
-      className="pt-24 pb-20 text-center bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-orbitron relative overflow-hidden"
+      className="pt-24 pb-20 text-center text-white font-orbitron relative overflow-hidden"
     >
-      {/* Glow nhẹ */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-72 h-72 bg-cyan-500 opacity-30 rounded-full blur-3xl animate-pulse"></div>
+      {/* Bỏ glow và gradient nền */}
 
-      {/* Gradient chuyển động */}
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-blue-500 opacity-10 animate-gradient"></div>
-
-      {/* Container có ảnh nền */}
+      {/* Container với ảnh nền giữ nguyên */}
       <div
         className="container mx-auto px-4 md:px-6 z-10 relative bg-cover bg-center bg-no-repeat max-w-[1000px] min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center items-center rounded-2xl shadow-2xl overflow-hidden"
         style={{

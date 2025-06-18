@@ -1,6 +1,27 @@
-// src/components/Skills.tsx
-import { FaReact, FaHtml5, FaCss3Alt, FaGitAlt, FaJava, FaFigma, FaBug, FaAndroid, FaProjectDiagram } from 'react-icons/fa';
-import { SiSpringboot, SiMysql, SiPostman, SiTailwindcss, SiJavascript, SiDocker, SiJirasoftware, SiNotion, SiAngular, SiIonic, SiMicrodotblog} from 'react-icons/si';
+import {
+  FaReact,
+  FaHtml5,
+  FaCss3Alt,
+  FaGitAlt,
+  FaJava,
+  FaFigma,
+  FaBug,
+  FaAndroid,
+  FaProjectDiagram,
+} from 'react-icons/fa';
+import {
+  SiSpringboot,
+  SiMysql,
+  SiPostman,
+  SiTailwindcss,
+  SiJavascript,
+  SiDocker,
+  SiJirasoftware,
+  SiNotion,
+  SiAngular,
+  SiIonic,
+  SiMicrodotblog,
+} from 'react-icons/si';
 import { motion } from 'framer-motion';
 
 export default function Skills() {
@@ -10,8 +31,14 @@ export default function Skills() {
       color: 'from-blue-500 to-blue-300',
       skills: [
         { name: 'Java', icon: <FaJava size={30} color="#F89820" /> },
-        { name: 'Spring Boot', icon: <SiSpringboot size={30} color="#6DB33F" /> },
-        { name: 'Microservices', icon: <SiMicrodotblog size={30} color="#6DB33F" /> },
+        {
+          name: 'Spring Boot',
+          icon: <SiSpringboot size={30} color="#6DB33F" />,
+        },
+        {
+          name: 'Microservices',
+          icon: <SiMicrodotblog size={30} color="#6DB33F" />,
+        },
         { name: 'MySQL', icon: <SiMysql size={30} color="#4479A1" /> },
         { name: 'Postman', icon: <SiPostman size={30} color="#FF6C37" /> },
         { name: 'Docker', icon: <SiDocker size={30} color="#0db7ed" /> },
@@ -25,10 +52,16 @@ export default function Skills() {
         { name: 'React Native', icon: <FaReact size={30} color="#61DAFB" /> },
         { name: 'Angular', icon: <SiAngular size={30} color="#DD0031" /> },
         { name: 'Ionic', icon: <SiIonic size={30} color="#3880FF" /> },
-        { name: 'JavaScript', icon: <SiJavascript size={30} color="#F7DF1E" /> },
+        {
+          name: 'JavaScript',
+          icon: <SiJavascript size={30} color="#F7DF1E" />,
+        },
         { name: 'HTML', icon: <FaHtml5 size={30} color="#E34F26" /> },
         { name: 'CSS', icon: <FaCss3Alt size={30} color="#1572B6" /> },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss size={30} color="#06B6D4" /> },
+        {
+          name: 'Tailwind CSS',
+          icon: <SiTailwindcss size={30} color="#06B6D4" />,
+        },
         { name: 'Android Java', icon: <FaAndroid size={30} color="#3DDC84" /> },
       ],
     },
@@ -53,17 +86,26 @@ export default function Skills() {
       ],
     },
     {
-      title: 'Bussiness Analysts',
+      title: 'Business Analysts',
       color: 'from-green-500 to-green-300',
       skills: [
-        { name: 'System Analysis', icon: <FaProjectDiagram size={30} color="#10B981" /> },
-        { name: 'System Design', icon: <FaProjectDiagram size={30} color="#10B981" /> },
+        {
+          name: 'System Analysis',
+          icon: <FaProjectDiagram size={30} color="#10B981" />,
+        },
+        {
+          name: 'System Design',
+          icon: <FaProjectDiagram size={30} color="#10B981" />,
+        },
       ],
     },
   ];
 
   return (
-    <section id="skills"  className="py-20 bg-gradient-to-br from-[#e0f2fe] via-[#f0f4f8] to-[#fdf2f8] font-orbitron">
+    <section
+      id="skills"
+      className="py-20 font-orbitron"
+    >
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-12">My Skills</h2>
 
