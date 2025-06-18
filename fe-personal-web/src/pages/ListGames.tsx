@@ -1,6 +1,4 @@
 // src/pages/ListGames.tsx
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
 const games = [
@@ -23,10 +21,8 @@ const games = [
 
 export default function ListGames() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800">
-      <Header />
-
-      <main className="flex-1 container mx-auto px-4 py-20 font-orbitron">
+    <div className="min-h-screen flex flex-col from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 ">
+      <main id="games" className="flex-1 container mx-auto px-4 py-20 font-orbitron">
         <motion.h1
           className="text-5xl font-extrabold text-center mb-16 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: -50 }}
@@ -40,8 +36,8 @@ export default function ListGames() {
           {games.map((game, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-cyan-500/50 transition-shadow duration-300 cursor-pointer"
-              whileHover={{ scale: 1.05 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 hover:shadow-cyan-500/50 hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-200 dark:border-gray-700"
+              whileHover={{ scale: 1.05, rotate: [0, 2, -2, 0] }}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
@@ -52,15 +48,16 @@ export default function ListGames() {
               <p className="text-gray-600 dark:text-gray-400 mb-6 text-center text-lg">
                 {game.description}
               </p>
+
               {game.comingSoon ? (
-                <span className="block text-center text-gray-400 cursor-default">
-                  Coming soon...
+                <span className="block text-center text-gray-400 cursor-default text-xl font-semibold">
+                  🚧 Coming soon...
                 </span>
               ) : (
                 <div className="flex justify-center">
                   <a
                     href={game.link}
-                    className="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl hover:from-cyan-600 hover:to-blue-600 transition-colors text-lg font-semibold"
+                    className="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl hover:from-cyan-600 hover:to-blue-600 hover:scale-110 transition-all text-lg font-semibold"
                   >
                     Play now →
                   </a>
@@ -70,8 +67,6 @@ export default function ListGames() {
           ))}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

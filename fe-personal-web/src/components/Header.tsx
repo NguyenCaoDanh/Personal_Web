@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  FaGithub,
-  FaLinkedin,
-  FaEnvelope,
-  FaBars,
-  FaTimes,
-} from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import ToggleThemeButton from './ToggleThemeButton';
 
@@ -15,17 +9,17 @@ export default function Header() {
 
   useEffect(() => {
     const handleActiveSection = () => {
-      const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+      // 👉 Thêm 'games' vào danh sách section cần theo dõi
+      const sections = ['home', 'about', 'skills', 'projects', 'games', 'contact'];
       let current = 'home';
 
       sections.forEach((section) => {
-        const element = document.getElementById(
-          section === 'projects' ? 'portfolio' : section
-        );
-        if (element && window.scrollY >= element.offsetTop - 100) {
+        const element = document.getElementById(section === 'projects' ? 'portfolio' : section);
+        if (element && window.scrollY >= element.offsetTop - 120) {
           current = section;
         }
       });
+
       setActiveSection(current);
     };
 
@@ -37,9 +31,9 @@ export default function Header() {
 
   return (
     <>
-      <motion.nav className="fixed top-0 w-full bg-gray-900 shadow-lg z-50 transition-transform duration-500">
+      <motion.nav className="fixed top-0 w-full bg-transparent backdrop-blur-md border-b border-gray-300/20 dark:border-gray-700/20 shadow-lg z-50 transition-transform duration-500">
         <div className="container mx-auto px-8 py-4 flex justify-between items-center font-orbitron">
-          {/* Menu button in mobile & iPad view */}
+          {/* Menu button in mobile view */}
           <div className="lg:hidden flex items-center space-x-4">
             <div
               className="text-gray-100 text-2xl cursor-pointer"
@@ -67,7 +61,7 @@ export default function Header() {
                     item.toLowerCase() === 'projects'
                       ? '#portfolio'
                       : item.toLowerCase() === 'games'
-                      ? '/list-games'
+                      ? '#games'
                       : `#${item.toLowerCase()}`
                   }
                   className={`${
@@ -89,7 +83,7 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* Right group: ToggleThemeButton + Social icons */}
+          {/* Right group */}
           <div className="flex items-center space-x-4">
             <ToggleThemeButton />
             <div className="hidden lg:flex space-x-6 text-gray-100">
@@ -120,7 +114,7 @@ export default function Header() {
         </div>
       </motion.nav>
 
-      {/* Sidebar Mobile & iPad */}
+      {/* Sidebar Mobile */}
       <AnimatePresence>
         {isSidebarOpen && (
           <>
@@ -158,9 +152,7 @@ export default function Header() {
                           : `#${item.toLowerCase()}`
                       }
                       className={`block hover:text-cyan-400 transition-all duration-300 ${
-                        activeSection === item.toLowerCase()
-                          ? 'text-cyan-400'
-                          : ''
+                        activeSection === item.toLowerCase() ? 'text-cyan-400' : ''
                       }`}
                       onClick={() => setIsSidebarOpen(false)}
                     >

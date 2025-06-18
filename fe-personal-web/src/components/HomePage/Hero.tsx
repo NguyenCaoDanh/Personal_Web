@@ -35,21 +35,12 @@ export default function Hero() {
       id="home"
       className="pt-24 pb-20 text-center text-white font-orbitron relative overflow-hidden"
     >
-      {/* Bỏ glow và gradient nền */}
-
-      {/* Container với ảnh nền giữ nguyên */}
+      {/* Container đơn giản không viền, không nền */}
       <div
-        className="container mx-auto px-4 md:px-6 z-10 relative bg-cover bg-center bg-no-repeat max-w-[1000px] min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center items-center rounded-2xl shadow-2xl overflow-hidden"
-        style={{
-          backgroundImage:
-            "url('https://png.pngtree.com/thumb_back/fh260/background/20231002/pngtree-illustration-of-a-3d-render-showcasing-a-concept-of-web-ui-image_13584942.png')",
-        }}
+        className="container mx-auto px-4 md:px-6 z-10 relative max-w-[1000px] min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center items-center"
       >
-        {/* Overlay mờ giúp chữ dễ đọc */}
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
         {/* Nội dung */}
-        <div className="relative z-10 text-white p-4 md:p-6 max-w-[90%]">
+        <div className="text-white p-4 md:p-6 max-w-[90%]">
           <motion.h1
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}

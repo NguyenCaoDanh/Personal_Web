@@ -12,6 +12,8 @@ import {
   FaBug,
   FaAndroid,
   FaProjectDiagram,
+  FaArrowLeft,
+  FaArrowRight,
 } from 'react-icons/fa';
 
 import {
@@ -27,8 +29,6 @@ import {
   SiIonic,
   SiMicrodotblog,
 } from 'react-icons/si';
-
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 export default function Skills() {
   const skillCategories = [
@@ -115,8 +115,13 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: catIndex * 0.3, duration: 0.8 }}
               viewport={{ once: true }}
-              className={`p-6 rounded-2xl bg-gradient-to-br ${category.color} text-white shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-500`}
+              className="p-6 rounded-2xl bg-white/10 backdrop-blur-lg border border-gray-300/20 text-white shadow-lg hover:shadow-cyan-400/50 hover:scale-105 transition-all duration-500 cursor-default relative overflow-hidden"
             >
+              {/* Glow Effect */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-cyan-400 pointer-events-none transition-opacity duration-500"
+              ></motion.div>
+
               <h3 className="text-2xl font-semibold mb-6">{category.title}</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                 {category.skills.map((skill, index) => (
@@ -126,7 +131,8 @@ export default function Skills() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center bg-white text-gray-800 p-4 rounded-xl shadow hover:shadow-xl hover:scale-110 border-2 border-transparent hover:border-cyan-400 transition-all duration-500 cursor-default"
+                    whileHover={{ scale: 1.15, rotate: [0, 2, -2, 0] }}
+                    className="flex flex-col items-center bg-white/20 backdrop-blur-lg text-gray-200 p-4 rounded-xl shadow hover:shadow-xl hover:border-cyan-400 border-2 border-transparent transition-all duration-500 cursor-default"
                   >
                     <div className="mb-2">{skill.icon}</div>
                     <p className="font-medium text-center">{skill.name}</p>
@@ -140,10 +146,10 @@ export default function Skills() {
         {/* Mobile Slider */}
         <div {...handlers} className="md:hidden relative overflow-hidden">
           <div className="flex justify-between items-center mb-4">
-            <button onClick={prevSlide} className="p-2 bg-gray-200 rounded-full hover:bg-cyan-400 transition-all">
+            <button onClick={prevSlide} className="p-2 bg-white/20 backdrop-blur-lg rounded-full hover:bg-cyan-400 transition-all">
               <FaArrowLeft />
             </button>
-            <button onClick={nextSlide} className="p-2 bg-gray-200 rounded-full hover:bg-cyan-400 transition-all">
+            <button onClick={nextSlide} className="p-2 bg-white/20 backdrop-blur-lg rounded-full hover:bg-cyan-400 transition-all">
               <FaArrowRight />
             </button>
           </div>
@@ -155,18 +161,24 @@ export default function Skills() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className={`p-6 rounded-2xl bg-gradient-to-br ${skillCategories[currentIndex].color} text-white shadow-lg min-h-[400px] flex flex-col justify-center items-center`}
+              className="p-6 rounded-2xl bg-white/10 backdrop-blur-lg border border-gray-300/20 text-white shadow-lg min-h-[400px] flex flex-col justify-center items-center relative overflow-hidden"
             >
+              {/* Glow Effect */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-cyan-400 pointer-events-none transition-opacity duration-500"
+              ></motion.div>
+
               <h3 className="text-2xl font-semibold mb-6">{skillCategories[currentIndex].title}</h3>
               <div className="grid grid-cols-2 gap-6">
                 {skillCategories[currentIndex].skills.map((skill) => (
-                  <div
+                  <motion.div
                     key={skill.name}
-                    className="flex flex-col items-center bg-white text-gray-800 p-4 rounded-xl shadow hover:shadow-xl hover:scale-110 border-2 border-transparent hover:border-cyan-400 transition-all duration-500 cursor-default"
+                    whileHover={{ scale: 1.15, rotate: [0, 2, -2, 0] }}
+                    className="flex flex-col items-center bg-white/20 backdrop-blur-lg text-gray-200 p-4 rounded-xl shadow hover:shadow-xl hover:border-cyan-400 border-2 border-transparent transition-all duration-500 cursor-default"
                   >
                     <div className="mb-2">{skill.icon}</div>
                     <p className="font-medium text-center">{skill.name}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
