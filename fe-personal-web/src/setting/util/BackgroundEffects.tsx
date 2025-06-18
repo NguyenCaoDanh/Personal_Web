@@ -1,60 +1,77 @@
-import { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export default function BackgroundEffects() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
   useEffect(() => {
-    const createBubbles = () => {
-      const container = document.createElement('div');
-      document.body.appendChild(container);
+    const html = document.querySelector('html');
+    if (html?.classList.contains('dark')) {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
 
-      for (let i = 0; i < 15; i++) {
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        bubble.style.left = `${Math.random() * 100}vw`;
-        bubble.style.animationDuration = `${8 + Math.random() * 4}s`;
-        bubble.style.width = bubble.style.height = `${
-          10 + Math.random() * 20
-        }px`;
-        container.appendChild(bubble);
+    const observer = new MutationObserver(() => {
+      if (html?.classList.contains('dark')) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
       }
-    };
+    });
 
-    const createGlows = () => {
-      for (let i = 0; i < 20; i++) {
-        const glow = document.createElement('div');
-        glow.className = 'glow';
-        glow.style.left = `${Math.random() * 100}vw`;
-        glow.style.top = `${Math.random() * 100}vh`;
-        glow.style.animationDuration = `${2 + Math.random() * 3}s`;
-        document.body.appendChild(glow);
-      }
-    };
+    if (html) {
+      observer.observe(html, { attributes: true, attributeFilter: ['class'] });
+    }
 
-    const createShootingStars = () => {
-      for (let i = 0; i < 3; i++) {
-        const star = document.createElement('div');
-        star.className = 'shooting-star';
-        star.style.top = `${Math.random() * 50}vh`;
-        star.style.animationDelay = `${Math.random() * 10}s`;
-        document.body.appendChild(star);
-      }
-    };
-
-    const createParticles = () => {
-      for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        particle.style.animationDuration = `${10 + Math.random() * 10}s`;
-        document.body.appendChild(particle);
-      }
-    };
-
-    createBubbles();
-    createGlows();
-    createShootingStars();
-    createParticles();
+    return () => observer.disconnect();
   }, []);
 
-  return null;
+  const particles = useMemo(() => {
+    return Array.from({ length: 40 }).map((_, i) => ({
+      id: i,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      size: 4 + Math.random() * 6,
+      duration: 4 + Math.random() * 4,
+      delay: Math.random() * 3,
+      color: i % 2 === 0 ? 'lime-300' : 'pink-400',
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      {/* Light Mode Particles */}
+      {theme === 'light' &&
+        particles.map((p) => (
+          <div
+            key={p.id}
+            className={`particle bg-${p.color}`}
+            style={{
+              top: `${p.top}%`,
+              left: `${p.left}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              animationDuration: `${p.duration}s`,
+              animationDelay: `${p.delay}s`,
+            }}
+          />
+        ))}
+
+      {/* Dark Mode Shooting Stars */}
+      {theme === 'dark' &&
+        Array.from({ length: 15 }).map((_, i) => (
+          <div
+            key={i}
+            className="shooting-star"
+            style={{
+              top: `${Math.random() * 80 + 10}%`,
+              left: `${Math.random() * 80 + 10}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+              transform: `rotate(${Math.random() * 360}deg)`,
+            }}
+          />
+        ))}
+    </div>
+  );
 }
