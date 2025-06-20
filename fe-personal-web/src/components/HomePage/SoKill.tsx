@@ -52,12 +52,7 @@ export default function Skills() {
           name: 'Spring Boot',
           icon: <SiSpringboot size={30} color="#6DB33F" />,
         },
-        { name: 'Node.js', icon: <SiNodedotjs size={30} color="#68A063" /> },
-        { name: 'Python', icon: <SiPython size={30} color="#3776AB" /> },
-        { name: 'Go', icon: <SiGo size={30} color="#00ADD8" /> },
         { name: 'MySQL', icon: <SiMysql size={30} color="#4479A1" /> },
-        { name: 'MongoDB', icon: <SiMongodb size={30} color="#47A248" /> },
-        { name: 'Redis', icon: <SiRedis size={30} color="#DC382D" /> },
         { name: 'Postman', icon: <SiPostman size={30} color="#FF6C37" /> },
         { name: 'Docker', icon: <SiDocker size={30} color="#0db7ed" /> },
       ],
@@ -88,7 +83,6 @@ export default function Skills() {
       color: 'from-purple-500 to-purple-300',
       skills: [
         { name: 'ReactJS', icon: <FaReact size={30} color="#61DAFB" /> },
-        { name: 'React Native', icon: <FaReact size={30} color="#61DAFB" /> },
         { name: 'Angular', icon: <SiAngular size={30} color="#DD0031" /> },
         { name: 'Ionic', icon: <SiIonic size={30} color="#3880FF" /> },
         {
@@ -112,13 +106,6 @@ export default function Skills() {
           name: 'RESTful API',
           icon: <FaProjectDiagram size={30} color="#10B981" />,
         },
-        { name: 'GraphQL', icon: <SiGraphql size={30} color="#E535AB" /> },
-       { name: 'AWS', icon: <SiAmazon size={30} color="#FF9900" /> },
-
-        {
-          name: 'Google Cloud',
-          icon: <SiGooglecloud size={30} color="#4285F4" />,
-        },
         { name: 'Jenkins', icon: <SiJenkins size={30} color="#D24939" /> },
         {
           name: 'GitHub Actions',
@@ -132,7 +119,6 @@ export default function Skills() {
       skills: [
         { name: 'Git', icon: <FaGitAlt size={30} color="#F1502F" /> },
         { name: 'Figma', icon: <FaFigma size={30} color="#A259FF" /> },
-        { name: 'Jira', icon: <SiJirasoftware size={30} color="#0052CC" /> },
         { name: 'Notion', icon: <SiNotion size={30} color="#000000" /> },
       ],
     },
