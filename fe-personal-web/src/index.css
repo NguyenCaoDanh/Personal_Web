@@ -7,18 +7,12 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-
-    /* Background image variables */
-    --background-image: url('/img/light-mode.jpg');
-    --next-background-image: url('/img/dark-mode.jpg');
-  }
-
-  .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    --radius: 0.5rem;
+
+    /* Background image: chỉ dark mode */
+    --background-image: url('/img/dark-mode.jpg');
   }
 
   * {
@@ -33,40 +27,22 @@
   }
 
   /* =======================
-     Dual Background Layers
+     Background Layer
      ======================= */
-  body::before,
-  body::after {
+  body::before {
     content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-image: var(--background-image);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     z-index: -2;
     opacity: 1;
-    transition: opacity 1s ease-in-out;
     pointer-events: none;
-  }
-
-  /* Current background */
-  body::before {
-    background-image: var(--background-image);
-  }
-
-  /* Next background - hidden by default */
-  body::after {
-    background-image: var(--next-background-image);
-    opacity: 0;
-    z-index: -1;
-  }
-
-  /* When fade-next is active, the next background fades in */
-  body.fade-next::after {
-    opacity: 1;
   }
 }
 
@@ -101,6 +77,7 @@ body {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.5);
 }
+
 /* =========================
    Hiệu Ứng Bong Bóng Nổi
    ========================= */
@@ -217,6 +194,7 @@ body {
     opacity: 0.3;
   }
 }
+
 .twinkle {
   position: fixed;
   width: 3px;
@@ -228,7 +206,8 @@ body {
 }
 
 @keyframes twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.2;
     transform: scale(1);
   }
@@ -237,6 +216,7 @@ body {
     transform: scale(1.5);
   }
 }
+
 .cloud {
   position: fixed;
   background: rgba(255, 255, 255, 0.1);
@@ -256,14 +236,19 @@ body {
     transform: translateX(110vw);
   }
 }
+
 .aurora {
   position: fixed;
   width: 150%;
   height: 150%;
   top: -25%;
   left: -25%;
-  background: radial-gradient(circle at 30% 30%, rgba(0,255,255,0.1), transparent),
-              radial-gradient(circle at 70% 70%, rgba(255,0,255,0.1), transparent);
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(0, 255, 255, 0.1),
+      transparent
+    ),
+    radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.1), transparent);
   animation: auroraMove 20s infinite linear;
   z-index: -3;
 }
@@ -279,13 +264,18 @@ body {
     transform: rotate(360deg) scale(1);
   }
 }
+
 .fog {
   position: fixed;
   width: 200%;
   height: 200%;
   top: -50%;
   left: -50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 20%, transparent 80%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.03) 20%,
+    transparent 80%
+  );
   animation: fogMove 120s linear infinite;
   z-index: -2;
 }

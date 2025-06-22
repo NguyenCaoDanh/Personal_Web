@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaBars, FaTimes } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaLinkedin,
+  FaEnvelope,
+  FaBars,
+  FaTimes,
+} from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import ToggleThemeButton from './ToggleThemeButton';
 
 export default function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -9,12 +14,20 @@ export default function Header() {
 
   useEffect(() => {
     const handleActiveSection = () => {
-      // 👉 Thêm 'games' vào danh sách section cần theo dõi
-      const sections = ['home', 'about', 'skills', 'projects', 'games', 'contact'];
+      const sections = [
+        'home',
+        'about',
+        'skills',
+        'projects',
+        'games',
+        'contact',
+      ];
       let current = 'home';
 
       sections.forEach((section) => {
-        const element = document.getElementById(section === 'projects' ? 'portfolio' : section);
+        const element = document.getElementById(
+          section === 'projects' ? 'portfolio' : section
+        );
         if (element && window.scrollY >= element.offsetTop - 120) {
           current = section;
         }
@@ -31,7 +44,7 @@ export default function Header() {
 
   return (
     <>
-      <motion.nav className="fixed top-0 w-full bg-transparent backdrop-blur-md border-b border-gray-300/20 dark:border-gray-700/20 shadow-lg z-50 transition-transform duration-500">
+      <motion.nav className="fixed top-0 w-full bg-transparent backdrop-blur-md border-b border-gray-300/20 shadow-lg z-50 transition-transform duration-500">
         <div className="container mx-auto px-8 py-4 flex justify-between items-center font-orbitron">
           {/* Menu button in mobile view */}
           <div className="lg:hidden flex items-center space-x-4">
@@ -83,9 +96,8 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* Right group */}
+          {/* Right group - Social Icons only */}
           <div className="flex items-center space-x-4">
-            <ToggleThemeButton />
             <div className="hidden lg:flex space-x-6 text-gray-100">
               <a
                 href="https://github.com/your-github"
@@ -152,7 +164,9 @@ export default function Header() {
                           : `#${item.toLowerCase()}`
                       }
                       className={`block hover:text-cyan-400 transition-all duration-300 ${
-                        activeSection === item.toLowerCase() ? 'text-cyan-400' : ''
+                        activeSection === item.toLowerCase()
+                          ? 'text-cyan-400'
+                          : ''
                       }`}
                       onClick={() => setIsSidebarOpen(false)}
                     >
