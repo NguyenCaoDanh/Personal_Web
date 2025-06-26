@@ -5,7 +5,7 @@ import { FaGithub, FaExternalLinkAlt, FaTools } from 'react-icons/fa';
 export default function Portfolio() {
   const projects = [
     {
-      title: 'Recruitment Web App (Wisdom Carrier)',
+      title: 'Recruitment Web App (Wisdom Carreer)',
       desc: 'A full-stack recruitment system with JWT authentication and email notifications.',
       stack: 'Spring Boot, ReactJS, MySQL, JWT, Email API',
       source: '#',
@@ -28,7 +28,7 @@ export default function Portfolio() {
     {
       title: 'AntMotor.vn (Outsource Project)',
       desc: 'A motorcycle e-commerce website delivered in collaboration with the client.',
-      stack: 'PHP, Laravel, MySQL',
+      stack: 'Spring Boot, ReactJS, MySQL',
       source: '#',
       demo: 'https://antmotor.vn',
     },
@@ -42,18 +42,21 @@ export default function Portfolio() {
     {
       title: 'Travel Website',
       desc: 'A modern travel agency landing page with beautiful animations.',
-      stack: 'ReactJS, Tailwind CSS, Framer Motion',
+      stack: 'ReactJS, Tailwind CSS, Spring Boot',
       source: '#',
       demo: '#',
     },
   ];
 
-  const projectImage = 'https://png.pngtree.com/thumb_back/fh260/background/20230527/pngtree-8-best-free-mountain-background-images-4k-wallpapers-image_2670051.jpg';
+  const projectImage =
+    'https://png.pngtree.com/thumb_back/fh260/background/20230527/pngtree-8-best-free-mountain-background-images-4k-wallpapers-image_2670051.jpg';
 
   return (
     <section id="portfolio" className="py-20 font-orbitron">
       <div className="container mx-auto px-6 max-w-7xl">
-        <h2 className="text-4xl font-bold mb-12 text-center text-primary">My Projects</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center text-primary">
+          My Projects
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
           {projects.map((p, index) => (
@@ -91,8 +94,12 @@ export default function Portfolio() {
                 </div>
               </div>
               <div className="p-6 text-left">
-                <h3 className="text-xl font-semibold mb-3 text-blue-600 dark:text-purple-300">{p.title}</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">{p.desc}</p>
+                <h3 className="text-xl font-semibold mb-3 text-blue-600 dark:text-purple-300">
+                  {p.title}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  {p.desc}
+                </p>
                 <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm space-x-2">
                   <FaTools />
                   <span>{p.stack}</span>
