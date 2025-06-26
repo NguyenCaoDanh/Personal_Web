@@ -54,7 +54,6 @@ export default function Skills() {
         },
         { name: 'MySQL', icon: <SiMysql size={30} color="#4479A1" /> },
         { name: 'Postman', icon: <SiPostman size={30} color="#FF6C37" /> },
-        { name: 'Docker', icon: <SiDocker size={30} color="#0db7ed" /> },
       ],
     },
     {
@@ -106,7 +105,6 @@ export default function Skills() {
           name: 'RESTful API',
           icon: <FaProjectDiagram size={30} color="#10B981" />,
         },
-        { name: 'Jenkins', icon: <SiJenkins size={30} color="#D24939" /> },
         {
           name: 'GitHub Actions',
           icon: <FaGitAlt size={30} color="#24292E" />,
