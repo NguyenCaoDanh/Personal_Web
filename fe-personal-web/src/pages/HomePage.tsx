@@ -18,8 +18,8 @@ export default function HomePage() {
         <About />
         <SoKill />
         <Portfolio />
-        <Contact />
         <ListGames />
+        <Contact />
         <Footer />
         <BackToTopButton />
       </div>

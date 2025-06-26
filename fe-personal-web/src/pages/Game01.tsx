@@ -2,27 +2,23 @@ import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import useSound from 'use-sound';
-
 
 interface Position {
   x: number;
   y: number;
 }
 
-const boardSize = 400;
 const segmentSize = 20;
 
 export default function SmoothSnakeGame() {
+  const [boardSize, setBoardSize] = useState(400);
   const [snake, setSnake] = useState<Position[]>([
     { x: 200, y: 200 },
     { x: 180, y: 200 },
     { x: 160, y: 200 },
   ]);
-  const [direction, setDirection] = useState<'UP' | 'DOWN' | 'LEFT' | 'RIGHT'>(
-    'RIGHT'
-  );
-  const [food, setFood] = useState(generateFood());
+  const [direction, setDirection] = useState<'UP' | 'DOWN' | 'LEFT' | 'RIGHT'>('RIGHT');
+  const [food, setFood] = useState(generateFood(400));
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -31,7 +27,20 @@ export default function SmoothSnakeGame() {
   const requestRef = useRef<number | null>(null);
   const speed = 2;
 
+  // Responsive board size
+  useEffect(() => {
+    const resizeBoard = () => {
+      const width = window.innerWidth;
+      const size = width < 500 ? width - 40 : 400;
+      setBoardSize(size);
+      setFood(generateFood(size));
+    };
+    resizeBoard();
+    window.addEventListener('resize', resizeBoard);
+    return () => window.removeEventListener('resize', resizeBoard);
+  }, []);
 
+  // Countdown
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -39,6 +48,7 @@ export default function SmoothSnakeGame() {
     }
   }, [countdown]);
 
+  // Keyboard input
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -64,6 +74,7 @@ export default function SmoothSnakeGame() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [direction, isPaused]);
 
+  // Game loop
   useEffect(() => {
     if (gameOver || isPaused || countdown > 0) return;
 
@@ -118,9 +129,8 @@ export default function SmoothSnakeGame() {
       Math.abs(head.x - food.x) < segmentSize &&
       Math.abs(head.y - food.y) < segmentSize
     ) {
-  
       newSnake.push({ ...newSnake[newSnake.length - 1] });
-      setFood(generateFood());
+      setFood(generateFood(boardSize));
       setScore(score + 10);
     }
 
@@ -140,7 +150,7 @@ export default function SmoothSnakeGame() {
       { x: 160, y: 200 },
     ]);
     setDirection('RIGHT');
-    setFood(generateFood());
+    setFood(generateFood(boardSize));
     setGameOver(false);
     setScore(0);
     setIsPaused(false);
@@ -235,6 +245,23 @@ export default function SmoothSnakeGame() {
         </Link>
       </div>
 
+      {/* Mobile Controls */}
+      {window.innerWidth < 768 && !gameOver && (
+        <div className="mt-6 grid grid-cols-3 gap-2 w-48">
+          <div></div>
+          <Button onClick={() => setDirection('UP')} className="bg-green-500">↑</Button>
+          <div></div>
+
+          <Button onClick={() => setDirection('LEFT')} className="bg-green-500">←</Button>
+          <div></div>
+          <Button onClick={() => setDirection('RIGHT')} className="bg-green-500">→</Button>
+
+          <div></div>
+          <Button onClick={() => setDirection('DOWN')} className="bg-green-500">↓</Button>
+          <div></div>
+        </div>
+      )}
+
       {gameOver && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-2xl shadow-2xl text-center space-y-4 animate-bounce">
@@ -249,9 +276,9 @@ export default function SmoothSnakeGame() {
               >
                 Restart
               </Button>
-              <Link to="/list-games">
+              <Link to="/">
                 <Button variant="secondary" className="px-6 py-2 rounded-full">
-                Come Back
+                  Come Back
                 </Button>
               </Link>
             </div>
@@ -262,7 +289,7 @@ export default function SmoothSnakeGame() {
   );
 }
 
-function generateFood(): Position {
+function generateFood(boardSize: number): Position {
   return {
     x: Math.floor(Math.random() * (boardSize / segmentSize)) * segmentSize,
     y: Math.floor(Math.random() * (boardSize / segmentSize)) * segmentSize,
