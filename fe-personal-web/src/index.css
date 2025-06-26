@@ -11,8 +11,7 @@
     --foreground: 210 40% 98%;
     --radius: 0.5rem;
 
-    /* Background image: chỉ dark mode */
-    --background-image: url('/img/dark-mode.jpg');
+    
   }
 
   * {

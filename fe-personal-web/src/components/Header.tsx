@@ -100,7 +100,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex space-x-6 text-gray-100">
               <a
-                href="https://github.com/your-github"
+                href="https://github.com/NguyenCaoDanh"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-cyan-400 hover:scale-110 transition-transform duration-300"
@@ -108,18 +108,12 @@ export default function Header() {
                 <FaGithub size={20} />
               </a>
               <a
-                href="https://linkedin.com/in/your-linkedin"
+                href="https://www.linkedin.com/in/cao-danh-nguy%E1%BB%85n-57492435a/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-cyan-400 hover:scale-110 transition-transform duration-300"
               >
                 <FaLinkedin size={20} />
-              </a>
-              <a
-                href="mailto:your-email@gmail.com"
-                className="hover:text-cyan-400 hover:scale-110 transition-transform duration-300"
-              >
-                <FaEnvelope size={20} />
               </a>
             </div>
           </div>
@@ -180,7 +174,7 @@ export default function Header() {
 
               <div className="flex space-x-6 text-gray-300 justify-center">
                 <a
-                  href="https://github.com/your-github"
+                  href="https://github.com/NguyenCaoDanh"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-cyan-400 hover:scale-110 transition-transform duration-300"
@@ -188,18 +182,12 @@ export default function Header() {
                   <FaGithub size={20} />
                 </a>
                 <a
-                  href="https://linkedin.com/in/your-linkedin"
+                  href="https://www.linkedin.com/in/cao-danh-nguy%E1%BB%85n-57492435a/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-cyan-400 hover:scale-110 transition-transform duration-300"
                 >
                   <FaLinkedin size={20} />
-                </a>
-                <a
-                  href="mailto:your-email@gmail.com"
-                  className="hover:text-cyan-400 hover:scale-110 transition-transform duration-300"
-                >
-                  <FaEnvelope size={20} />
                 </a>
               </div>
             </motion.div>
